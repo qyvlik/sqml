@@ -3,6 +3,7 @@ import QtQuick.LocalStorage 2.0
 
 QtObject {
 
+    //! identifier start of up case
     property string identifier: ""
     property string version: ""
     property string description: ""

@@ -3,7 +3,7 @@ import QtQuick 2.0
 QtObject {
     id: service
 
-    property DataBaseConnection connection
+    property DatabaseConnection connection
     readonly property alias dao: service.__dao
 
     property CrudDao __dao

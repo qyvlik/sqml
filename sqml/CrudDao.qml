@@ -1,7 +1,7 @@
 import QtQuick 2.0
 
 QtObject {
-    property DataBaseConnection connection: null
+    property DatabaseConnection connection: null
 
     property SqlMapping sqlMapping: null
 
@@ -101,6 +101,7 @@ QtObject {
         sqlMapping.entity = entity;
         var sql = sqlMapping[sqlStringName];
         var sqlArgs = sqlMapping[sqlArgsName];
+        var limit = "";
         sqlMapping.entity = undefined;
 
         console.debug("sql : ", sql, " sqlArgs:", sqlArgs);

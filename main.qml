@@ -8,6 +8,17 @@ Item {
 
     DataBase {
         id: dataBase
+        Component.onCompleted: {
+            transaction(function (tx){
+                tx.executeSql('CREATE TABLE IF NOT EXISTS User(id TEXT, name TEXT)');
+            });
+        }
+
+        Component.onDestruction:  {
+            transaction(function (tx){
+                tx.executeSql('DROP TABLE User');
+            });
+        }
     }
 
     UserService {
@@ -26,6 +37,7 @@ Item {
             userService.insert(user, function(size){
                 console.log("user: " , size);
             });
+
             userService.getById("1", function(user){
                 if(typeof user !== 'undefined') {
                     console.log("user: " , "id", user.id, "name", user.name);
