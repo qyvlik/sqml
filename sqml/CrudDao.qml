@@ -88,24 +88,25 @@ QtObject {
 
     function __executeSqlImpl(entity, mapping, readOnly, callback, error) {
         if(!__checkImpl(entity)) {
+            console.error(JSON.stringify(entity), connection, __sqlMapping);
             error(new Error("check error"));
             return;
         }
 
         var ret = mapping(entity);
-        var sql = ret.sql;
+        //! [0] avoid have a blank char before SELECT
+        var sql = ret.sql.trim();
+        //! [0]
         var sqlArgs = ret.sqlArgs;
 
         if(debug) {
             console.debug("__executeSqlImpl : ", sql, " sqlArgs:", sqlArgs);
         }
 
-
         if(typeof sql === '' || sql === "") {
             error(new Error("sql is empty"));
             return;
         }
-
 
         var transaction = readOnly ? connection.readTransaction
                                    : connection.transaction;
@@ -119,6 +120,7 @@ QtObject {
                 }
                 callback(resultList);
             } catch(e) {
+                console.error("sql: ", sql);
                 error(e);
             }
         });

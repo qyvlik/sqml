@@ -4,6 +4,8 @@ import QtQuick 2.0
 QtObject {
     id: sqlMapping
 
+    property bool debug: false
+
     //@abstract
     function get(entity) {
         var sql = "";
