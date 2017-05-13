@@ -16,11 +16,9 @@ Item {
         .select(['name', 'sum(a.id)'])
         .from('a.user')
         .where()
-        .lt('a.id', 10)
-        .and()
         .gt('a.age', 10)
         .or()
-        .inValues('a.name', ['name', 'fuck'])
+        .inValues('a.name', ['name', 'mike'])
         .orderBy(['name', 'age'])
         console.log(builder.dumpSql());
         console.log(builder.dumpBind());
@@ -28,7 +26,7 @@ Item {
 
     function test_insert() {
         builder
-        .insertInto('user', ['name', 'age'], ['make', 10])
+        .insertInto('user', ['name', 'age'], ['mike', 10])
         console.log(builder.dumpSql());
         console.log(builder.dumpBind());
 
@@ -40,7 +38,7 @@ Item {
 
     function test_update() {
         builder.update('user', {
-                           'name': 'jiji',
+                           'name': 'mike',
                            "age": 10
                        })
         .where()
@@ -52,7 +50,7 @@ Item {
     function test_delete() {
         builder.deleteFrom('user')
         .where()
-        .like('name', '%gg%');
+        .like('name', '%mike%');
         console.log(builder.dumpSql());
         console.log(builder.dumpBind());
     }

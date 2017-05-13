@@ -14,7 +14,7 @@ Item {
     UserService {
         id: userService
         connection: dataBase
-        debug: true
+        debug: false
     }
 
     Component.onCompleted: {

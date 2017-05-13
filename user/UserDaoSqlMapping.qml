@@ -35,11 +35,7 @@ SqlMapping {
             sqlQueryBuilder.equals('id', entity.id);
         }
 
-        var result = sqlQueryBuilder.dump();
-
-        console.log("bind", result.bind)
-
-        return result;
+        return sqlQueryBuilder.dump();
     }
 
     //@override
