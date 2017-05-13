@@ -88,7 +88,7 @@ QtObject {
 
     function __executeSqlImpl(entity, mapping, readOnly, callback, error) {
         if(!__checkImpl(entity)) {
-            console.error(JSON.stringify(entity), connection, __sqlMapping);
+            console.error(JSON.stringify(entity), __connection, __sqlMapping);
             error(new Error("check error"));
             return;
         }
@@ -97,10 +97,10 @@ QtObject {
         //! [0] avoid have a blank char before SELECT
         var sql = ret.sql.trim();
         //! [0]
-        var sqlArgs = ret.sqlArgs;
+        var bind = ret.bind;
 
         if(debug) {
-            console.debug("__executeSqlImpl : ", sql, " sqlArgs:", sqlArgs);
+            console.debug("__executeSqlImpl : ", sql, " bind:", bind);
         }
 
         if(typeof sql === '' || sql === "") {
@@ -112,7 +112,7 @@ QtObject {
                                    : connection.transaction;
         transaction(function(tx){
             try {
-                var resultList = tx.executeSql(sql, sqlArgs);
+                var resultList = tx.executeSql(sql, bind);
                 if(debug) {
                     console.debug("resultList lenght : ", resultList.rows.length
                                   , " rowsAffected : ", resultList.rowsAffected
