@@ -20,6 +20,10 @@ QtObject {
         __reOpen();
     }
 
+    //@abstract
+    function initDatabase() {
+    }
+
     function __reOpen() {
         isOpen = false;
         __tryOpen();
@@ -40,7 +44,8 @@ QtObject {
             __database = LocalStorage.openDatabaseSync(identifier,
                                                        version,
                                                        description,
-                                                       estimatedSize);
+                                                       estimatedSize,
+                                                       initDatabase);
             isOpen = true;
         } else {
             throw "arguments lost!";
