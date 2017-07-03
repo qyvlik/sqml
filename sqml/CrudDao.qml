@@ -8,11 +8,12 @@ QtObject {
     readonly property var getByEntity: dao.__getByEntityImpl
     readonly property var findList: dao.__findListImpl
     readonly property var insert: dao.__insertImpl
+    readonly property var insertList: dao.__insertListImpl
     readonly property var update: dao.__updateImpl
     readonly property var deleteById: dao.__deleteByIdImpl
     readonly property var deleteRecord: dao.__deleteRecordImpl
 
-    property bool debug: true
+    property bool debug: __connection != null ? __connection.debug : false
 
     //protected:
     property DatabaseConnection __connection: null
@@ -54,6 +55,13 @@ QtObject {
     //@abstract
     function __insertImpl(entity, callback, error) {
         __executeSqlImpl(entity, __sqlMapping.insert, false, function(results){
+            callback(results.rowsAffected);
+        }, error);
+    }
+
+    //@abstract
+    function __insertListImpl(list, callback, error) {
+        __executeSqlImpl(list, __sqlMapping.insertList, false, function(results){
             callback(results.rowsAffected);
         }, error);
     }

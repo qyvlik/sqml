@@ -6,7 +6,7 @@ QtObject {
 
     property bool debug: false
 
-    property alias sqlQueryBuilder: sqlMapping.__sqlQueryBuilder
+    readonly property alias sqlQueryBuilder: sqlMapping.__sqlQueryBuilder
 
     readonly property SqlQueryBuilder __sqlQueryBuilder: SqlQueryBuilder {
     }
@@ -28,6 +28,11 @@ QtObject {
 
     //@abstract
     function insert(entity) {
+        return sqlQueryBuilder.dump();
+    }
+
+    //@abstract
+    function insertList(list) {
         return sqlQueryBuilder.dump();
     }
 

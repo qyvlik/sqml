@@ -5,7 +5,7 @@ QtObject {
 
     property DatabaseConnection connection
     readonly property alias dao: service.__dao
-    property bool debug: true
+    property bool debug: connection != null ? connection.debug : false
 
     //protected:
     property CrudDao __dao
@@ -28,6 +28,11 @@ QtObject {
     function insert(entity, callback, error) {
         error = error || __errorImpl;
         dao.insert(entity, callback, error);
+    }
+
+    function insertList(list, callback, error) {
+        error = error || __errorImpl;
+        dao.insertList(list, callback, error);
     }
 
     function update(entity, callback, error) {

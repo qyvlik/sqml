@@ -262,6 +262,44 @@ QtObject {
     }
 
 
+    function insertMutilValues(tableName, fields, mutilValues) {
+        var insertPrefix = 'INSERT INTO' + spaceString;
+        var valuesPrefix = spaceString + "VALUES" + spaceString;
+
+        var argLength = arguments.length;               // arguemnts length
+
+        var fieldsType = typeof fields;
+        var mutilValuesType = typeof mutilValues;
+
+        __checkTableName(tableName);
+
+        var fieldsStr = __fields(fields);
+
+        var sqlStrInsertInto = insertPrefix + tableName  +
+                "("+fieldsStr +")";
+
+        var bind = [];
+        var sqlQuery = '';
+
+        var sqlStr = '';
+
+        for(var iter in mutilValues) {
+
+            var valuesResult = __values(mutilValues[iter]);
+
+            sqlStr += valuesResult.sql + ", ";
+
+            bind = bind.concat(valuesResult.bind);
+        }
+
+        sqlStr = sqlStr.substring(0, sqlStr.length - 2);
+
+        __sqlQuery += sqlStrInsertInto + valuesPrefix + sqlStr
+        __bind = __bind.concat(bind);
+    }
+
+
+
     function update(tableName, map) {
         __checkTableName(tableName);
 
