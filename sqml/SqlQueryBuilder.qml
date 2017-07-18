@@ -66,13 +66,47 @@ QtObject {
         return builder;
     }
 
-    function where() {
-        var wherePrefix = spaceString + 'WHERE' + spaceString;
+    function where(callback) {
+        var argLen = arguments.length;
 
-        __sqlQuery += wherePrefix;
+        if (argLen == 0) {
+            var wherePrefix = spaceString + 'WHERE' + spaceString;
+
+            __sqlQuery += wherePrefix;
+        } else if (argLen == 1) {
+            __where2(callback);
+        }
 
         return builder;
     }
+
+    function __where2(callback) {
+        callback = callback || function(_builder) {
+        };
+        var wherePrefix = spaceString + 'WHERE' + spaceString;
+        var component = Qt.createComponent("./SqlQueryBuilder.qml");
+
+        var __builder = component.createObject(builder);
+
+        callback(__builder);
+
+        var __dump = __builder.dump();
+
+        try {
+            __builder.destroy();
+        } catch(e) {
+            console.error(e);
+        }
+
+        if (__dump.sql === '') {
+            return builder;
+        }
+
+        __sqlQuery += wherePrefix;
+        __sqlQuery += __dump.sql;
+        __bind = __bind.concat(__dump.bind);
+    }
+
 
     function and() {
         var andPrefix = spaceString + 'AND' + spaceString;

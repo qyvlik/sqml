@@ -19,6 +19,8 @@ QtObject {
     property DatabaseConnection __connection: null
     property SqlMapping __sqlMapping: null
 
+    readonly property int maxInsertCount: 500
+
     //@abstract
     function __getImpl(entity, callback, error) {
         __executeSqlImpl(entity, __sqlMapping.get, false, function(results){
@@ -61,6 +63,16 @@ QtObject {
 
     //@abstract
     function __insertListImpl(list, callback, error) {
+        if (typeof list === 'undefined' || list === null || list.length === 0) {
+            error('__insertListImpl fail : list is empty');
+        }
+
+        // Avoid Error: too many SQL variables
+        if (list.length > maxInsertCount) {
+            error('__insertListImpl fail : list count:'
+                  + list.length +' more than maxInsertCount');
+        }
+
         __executeSqlImpl(list, __sqlMapping.insertList, false, function(results){
             callback(results.rowsAffected);
         }, error);
@@ -120,7 +132,7 @@ QtObject {
                                    : connection.transaction;
         transaction(function(tx){
             try {
-                var resultList = tx.executeSql(sql, bind);
+                var resultList = tx.executeSql(sql, bind)
                 if(debug) {
                     console.debug("resultList lenght : ", resultList.rows.length
                                   , " rowsAffected : ", resultList.rowsAffected
