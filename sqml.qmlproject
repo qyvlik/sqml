@@ -19,6 +19,10 @@ Project {
         directory: "."
         filter: "*.md"
     }
+    Files {
+        directory: "."
+        filter: "qmldir"
+    }
 
     /* List of plugin directories passed to QML runtime */
     importPaths: [ "." ]

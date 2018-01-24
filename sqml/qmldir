@@ -1,4 +1,5 @@
 module sqml
+
 # Simple layering CRUD for qml
 # The module identifier directive must be the first line of the file. Exactly one module identifier directive may exist in the qmldir file.
 
