@@ -1,6 +1,6 @@
 # sqml
 
-Simple layering CRUD for qml
+Simple layering CRUD (sqlite orm) for qml
 
 ## Layering CRUD
 
